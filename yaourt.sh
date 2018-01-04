@@ -25,7 +25,7 @@ echo -e         "|                                                              
 echo -e         "|                                     "$ROUGE" -- Script Collections --                                    "$NORMAL"""|"
 echo -e "$VERT" "--------------------------------------------------------------------------------------------------""$NORMAL"
 echo ""
-echo -e "$BLEU" " V1.1 Installation en mode bios, ce script sera mis a jours trés prochainement" "$NORMAL"
+echo -e "$BLEU" " V1" "$NORMAL"
 echo ""
 
 
