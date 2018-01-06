@@ -22,23 +22,25 @@ echo -e "$VERT" "---------------------------------------------------------------
 echo -e         "|                                                                                                  ""|"
 echo -e         "|  by""$VERT" "d3v-donkey." "$CYAN""(GitHub: https://github.com/d3v-donkey)                                          "$NORMAL"""|"
 echo -e         "|                                                                                                  ""|"
-echo -e         "|                                     "$ROUGE" -- Script Collections --                                    "$NORMAL"""|"
+echo -e         "|                                     "$ROUGE" -- Scripts Collections --                                    "$NORMAL"""|"
 echo -e "$VERT" "--------------------------------------------------------------------------------------------------""$NORMAL"
 echo ""
-echo -e "$BLEU" " Formatage et partitionnement V1 EFI ou BIOS" "$NORMAL"
+echo -e "$BLEU" "Creation d'utilisateur et affectation des droits sudo" "$NORMAL"
 echo ""
 
 read -p "-- Entrer votre nom d'utilisateur souhaitez... : " user
 user_present="`cat /etc/passwd | grep $user | grep -v grep | wc -l`"
   if [ "$user_present" == "1" ]; then
     echo -e "\nUtilisateur $user déjà creer .. "
-	usermod -aG users,wheel,audio,optical,floppy,storage,video $user
+    usermod -aG wheel $user
+    passwd $user
   else
-    useradd -m -G wheel -s /bin/bash $user
-	usermod -aG users,wheel,audio,optical,floppy,storage,video $user
+    adduser $user
+    usermod -aG wheel $user
+    passwd $user
   fi
-passwd $user
-chown $user:$user /home/$user
+#deluser --remove-home $user
+
 
 read -p "Voulez-vous ajouter cet utilisateur à Sudoers (y/N)? : " response
 sudoers_present="`cat /etc/sudoers | grep $user | grep -v grep | wc -l`" 

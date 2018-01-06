@@ -92,35 +92,48 @@ fonct_part() {
                     echo -e "$CYAN" "-- Montage des partitions en cours (table GPT)..." "$NORMAL"
 
                     # Préparation 
-                    sgdisk -Z /dev/$form 
-                    sgdisk -a 2048 -o /dev/$form 
+                    sgdisk -Z /dev/${form} 
+                    sgdisk -a 2048 -o /dev/${form} 
 
                     # Creation des partitions
-                    sgdisk -n 0:0:+20G -t 0:8300 -c 0:"/" /dev/$form
-                    sgdisk -n 0:0:+512M -t 0:ef00 -c 0:"boot" /dev/$form
-                    sgdisk -n 0:0:+16G -t 0:8200 -c 0:"swap" /dev/$form
-                    sgdisk -n 0:0:0 -t 0:8300 -c 0:"home" /dev/$form
-                    sgdisk -p /dev/$form
+                    sgdisk -n 0:0:+20G -t 0:8300 -c 0:"/" /dev/${form}
+                    sgdisk -n 0:0:+512M -t 0:EF00 -c 0:"boot" /dev/${form}
+                    sgdisk -n 0:0:+16G -t 0:8200 -c 0:"swap" /dev/${form}
+                    sgdisk -n 0:0:0 -t 0:8300 -c 0:"home" /dev/${form}
+                    sgdisk -p /dev/${form}
                     #partprobe /dev/$form
               
-                    mkfs.ext4 /dev/$form 1
-                    mkfs.fat -F32 /dev/$form 2
-                    mkfs.ext4 /dev/$form 4
+                    mkfs.ext4 /dev/${form}1
+                    mkfs.fat -F32 /dev/${form}2
+                    mkfs.ext4 /dev/${form}4
 
-                    mkswap /dev/$form 3
-                    swapon /dev/$form 3
+                    mkswap /dev/${form}3
+                    swapon /dev/${form}3
 
-                    mount /dev/$form 1 /mnt
+                    mount /dev/${form}1 /mnt
                     mkdir /mnt/{boot,home}
-                    mount /dev/$form 2 /mnt/boot
-                    mount /dev/$form 4 /mnt/home
+                    mount /dev/${form}2 /mnt/boot
+                    mount /dev/${form}4 /mnt/home
 
                     vble_bcl2=3
                     vble_bcl1=2
 
                 elif [ "$var4" == "n" ] || [ "$var4" == "N" ]; then
                     echo -e "$ROUGE" "demarrage de cgdisk" "$NORMAL"
-                    cgdisk /dev/$form
+                    cgdisk /dev/${form}
+
+                    mkfs.ext4 /dev/${form}1
+                    mkfs.fat -F32 /dev/${form}2
+                    mkfs.ext4 /dev/${form}4
+
+                    mkswap /dev/${form}3
+                    swapon /dev/${form}3
+
+                    mount /dev/${form}1 /mnt
+                    mkdir /mnt/{boot,home}
+                    mount /dev/${form}2 /mnt/boot
+                    mount /dev/${form}4 /mnt/home
+
                     vble_bcl2=3
                     vble_bcl1=2
                 else
@@ -143,28 +156,42 @@ fonct_part() {
                 read -r var4
 
                 if [ "$var4" == "y" ] || [ "$var4" == "Y" ]; then
-                    echo -e "o\nn\np\n1\n\n+100M\na\nn\np\n2\n\n+16G\nn\np\n3\n\n+35G\nn\np\n4\n\n\nw" | fdisk /dev/$form
+                    echo -e "o\nn\np\n1\n\n+100M\na\nn\np\n2\n\n+16G\nn\np\n3\n\n+35G\nn\np\n4\n\n\nw" | fdisk /dev/${form}
                     
                     echo -e "$CYAN" "-- Montage des partitions en cours (table MBR)..." "$NORMAL"
 
-                    mkfs.ext2 /dev/$form 1
-                    mkfs.ext4 /dev/$form 3
-                    mkfs.ext4 /dev/$form 4
+                    mkfs.ext2 /dev/${form}1
+                    mkfs.ext4 /dev/${form}3
+                    mkfs.ext4 /dev/${form}4
 
-                    mkswap /dev/$form 2
-                    swapon /dev/$form 2
+                    mkswap /dev/${form}2
+                    swapon /dev/${form}2
 
-                    mount /dev/$form 3 /mnt
+                    mount /dev/${form}3 /mnt
                     mkdir /mnt/{boot,home}
-                    mount /dev/$form 1 /mnt/boot
-                    mount /dev/$form 4 /mnt/home
+                    mount /dev/${form}1 /mnt/boot
+                    mount /dev/${form}4 /mnt/home
 
                     vble_bcl3=4
                     vble_bcl1=2
 
                 elif [ "$var4" == "n" ] || [ "$var4" == "N" ]; then
                     echo -e "$ROUGE" "demarrage de cfdisk" "$NORMAL"
-                    cfdisk /dev/$form
+                    cfdisk /dev/${form}
+
+                    mkfs.ext2 /dev/${form}1
+                    mkfs.ext4 /dev/${form}3
+                    mkfs.ext4 /dev/${form}4
+
+                    mkswap /dev/${form}2
+                    swapon /dev/${form}2
+
+                    mount /dev/${form}3 /mnt
+                    mkdir /mnt/{boot,home}
+                    mount /dev/${form}1 /mnt/boot
+                    mount /dev/${form}4 /mnt/home
+
+
                     vble_bcl3=4
                     vble_bcl1=2
                 else
