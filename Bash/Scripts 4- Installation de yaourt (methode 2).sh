@@ -1,30 +1,45 @@
-#! /bin/bash
+#!/bin/bash
 
 #==============================================================================================================
-#                                
+#
 # Auteur  : Alexandre Maury
 # License : Distributed under the terms of GNU GPL version 2 or later
-# 
+#
 # GitHub : https://github.com/d3v-donkey
 #==============================================================================================================
-VERT="\\033[1;32m"
-NORMAL="\\033[0;39m"
-ROUGE="\\033[1;31m"
-ROSE="\\033[1;35m"
-BLEU="\\033[1;34m"
-BLANC="\\033[0;02m"
-BLANCLAIR="\\033[1;08m"
-JAUNE="\\033[1;33m"
-CYAN="\\033[1;36m"
-echo    ""
-                                                        
-echo -e "$VERT" "--------------------------------------------------------------------------------------------------""$NORMAL"
-echo -e         "|                                                                                                  ""|"
-echo -e         "|  by""$VERT" "d3v-donkey." "$CYAN""(GitHub: https://github.com/d3v-donkey)                                          "$NORMAL"""|"
-echo -e         "|                                                                                                  ""|"
-echo -e         "|                                     "$ROUGE" -- Scripts Collections --                                    "$NORMAL"""|"
-echo -e "$VERT" "--------------------------------------------------------------------------------------------------""$NORMAL"
+
+# Couleurs Bash
+
+#    30m : noir
+#    31m : rouge
+#    32m : vert
+#    33m : jaune
+#    34m : bleu
+#    35m : rose
+#    36m : cyan
+#    37m : gris
+
+#==============================================================================================================
+clear
+echo -e  "\e[32m                                                  _____    ____   __      __    _______   ______              __  __ ";
+echo -e  "\e[32m                                                 |  __ \  |___ \  \ \    / /   |__   __| |  ____|     /\     |  \/  |";
+echo -e  "\e[32m                                                 | |  | |   __) |  \ \  / /       | |    | |__       /  \    | \  / |";
+echo -e  "\e[32m                                                 | |  | |  |__ <    \ \/ /        | |    |  __|     / /\ \   | |\/| |";
+echo -e  "\e[32m                                                 | |__| |  ___) |    \  /         | |    | |____   / ____ \  | |  | |";
+echo -e  "\e[32m                                                 |_____/  |____/      \/          |_|    |______| /_/    \_\ |_|  |_|";
+
 echo ""
+
+#================= Test connection
+ping -c 4 google.com 
+test=$?
+
+if [ "$test" -eq 0 ]; then
+    echo -e "\e[33m[-- Network connecter, suite du programme...]";
+else
+	echo -e "\e[31m[-- S'il vous plait connecter Network...]";
+	sleep 3s && exit 0
+fi
 echo -e "$BLEU" " Installation de yaourt (methode 2)" "$NORMAL"
 echo "Il faut posséder les droits sudoers"
 
