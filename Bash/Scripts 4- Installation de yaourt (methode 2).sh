@@ -40,12 +40,12 @@ else
 	echo -e "\e[31m[-- S'il vous plait connecter Network...]";
 	sleep 3s && exit 0
 fi
-echo -e "$BLEU" " Installation de yaourt (methode 2)" "$NORMAL"
-echo "Il faut posséder les droits sudoers"
 
-sudo echo '[archlinuxfr]' >> /etc/pacman.conf 
-sudo echo 'SigLevel = Never' >> /etc/pacman.conf
-sudo echo 'Server = http://repo.archlinux.fr/$arch' >> /etc/pacman.conf
+sudo tee -a /etc/pacman.conf >/dev/null << 'EOF'
+[archlinuxfr]
+SigLevel = Never
+Server = http://repo.archlinux.fr/$arch
+EOF
 
-sudo pacman -Sy yaourt
+sudo pacman -Syy yaourt
 
